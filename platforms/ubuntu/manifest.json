@@ -1,0 +1,1 @@
+{"name":"br.com.vilela.dilmadilma","version":"0.0.1","title":"Dilma Dilma","hooks":{"cordova":{"desktop":"cordova.desktop","apparmor":"apparmor.json"}},"framework":"ubuntu-sdk-13.10","maintainer":"Apache Cordova Team <dev@cordova.apache.org>","architecture":"amd64","description":"Uma bricadeira com a lenda Charlie Charlie"}

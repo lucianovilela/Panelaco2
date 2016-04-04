@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/crafty-min.js"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <title>Panelaco</title>
+</head>
+
+<body ng-app="ctl" ng-controller='demoCtrl'>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/angular-touch.min.js"></script>
+    <div class="container " >
+        <div>
+
+         <!-- <ul class="nav nav-tabs" role="tablist"> 
+            <li role="presentation" ng-repeat="img in imgs" role="tabpanel" class="tab-pane fade in">
+                <a href="#{{img.id}}" aria-controls="profile" role="tab" data-toggle="tab">{{img.nome}}</a>
+            </li>
+         </ul>-->
+            <!-- Nav tabs 
+            <div class="tab-content  center-block" role="tablist" ng-swipe-right="swipe('direita')"
+                 ng-swipe-left="swipe('esquerda')">
+                <div ng-repeat="img in imgs" role="tabpanel" class="tab-pane fade in" id="{{img.id}}">
+
+                        <img src="{{img.img}}" ng-click="playSound(img.snd, img.id)"/>
+                </div>
+            </div>
+            -->
+            
+            <div class="input-group">
+                <div class="input-group-addon" >Estou batendo panela contra </div>
+                <select id="msg" ng-model="mensagem" class='form-control' ng-change='countClick=0'>
+                    <option ng-repeat="x in mensagens">{{x}}</option>
+                </select>
+            </div>
+                
+            <div  id="{{imgs[0].id}}">
+                <img src="{{imgs[0].img}}" ng-click="playSound(imgs[0].snd, imgs[0].id)"
+                    height="400" width="400"/>
+            </div>
+         <div>
+            clicks:{{countClick}} contra {{mensagem}}
+         </div>
+         <div>
+             <button class='btn btn-danger' ng-click="STATUS='COUNTDOWN'">Play</button>
+          </div>
+            <!--<div class="panel" ng-swipe-right="swipe('direita')"
+                 ng-swipe-left="swipe('esquerda')">
+                <input type="checkbox" ng-model="repetir" /> Repetir
+            </div>-->
+        </div>
+        <div class="modal fade" role="dialog" id="countdown">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h1>{{countdown}}</h1>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        var TIME_COUNT = 3000;
+        app.initialize();
+        var apps = angular.module('ctl', []);
+
+        apps.controller('demoCtrl',  function ($scope, $interval) {
+            $scope.mensagem='';
+            $scope.repetir = false;
+            $scope.active =0;
+            $scope.time = 0;
+            $scope.countClick =0;
+            $scope.countdown = TIME_COUNT;
+            $scope.mensagens = ['Lula', 'Dilma', 'Corrupção'];
+            
+            $scope.STATUS='INICIAL';
+            $scope.imgs = [{
+                "id":"tab0",
+                "img":'img/xxhdpi/pan1.png',
+                "snd": 'raw/pan1.ogg',
+                "nome": 'Panela 1'
+                }//,
+//                {
+//                "id":"tab1",
+//                "img":'img/xxhdpi/pan2.png',
+//                "snd": 'raw/pan2.ogg',
+//                "nome": 'Panela 2'
+//                }
+                ];
+            $scope.swipe = function(msg){
+                console.log(msg);
+            };
+            
+            $interval(function(){
+                switch($scope.STATUS){
+                    case 'COUNTDOWN':
+                        
+                        $scope.countdown = TIME_COUNT; 
+                        $scope.STATUS='COUNTDOWN-IN';
+                        jQuery('#countdown').modal('show');
+                        break;
+                    case 'COUNTDOWN-IN':
+                        $scope.countdown = $scope.countdown-500; 
+                        if($scope.countdown <= 0){
+                            jQuery('#countdown').modal('hide');
+                            $scope.STATUS='COUNTDOWN-OUT';
+                        }
+                        break;
+                    case 'COUNTDOWN-OUT':
+                        break;
+                }
+                
+            }, 500);
+            
+            
+            $scope.playSound = function ( snd, obj ){
+                var s = new Audio(snd);
+                jQuery("#"+obj).stop(true, true).effect( "shake" );;
+                
+                s.play();
+                $scope.countClick = $scope.countClick+1;
+                
+//               s.onended=function (){
+//                   if($scope.repetir){
+//                        jQuery("#"+obj).effect( "shake" );
+//                s.play();
+//                }};
+            };
+        });
+    </script>
+</body>
+
+</html>

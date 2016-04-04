@@ -1,0 +1,15 @@
+{
+    "launch_path": "/index.html",
+    "installs_allowed_from": [
+        "*"
+    ],
+    "version": "0.0.1",
+    "name": "Dilma Dilma",
+    "pkgName": "br.com.vilela.dilmadilma",
+    "description": "Uma bricadeira com a lenda Charlie Charlie",
+    "developer": {
+        "name": "Apache Cordova Team",
+        "url": "http://cordova.io"
+    },
+    "icons": {}
+}
